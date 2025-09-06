@@ -22,7 +22,6 @@ import sys, csv
 from typing import List
 
 def safe_div(n: float, d: float) -> float:
-    """Return n/d, or 0.0 if d == 0 (safe divide)."""
     return n / d if d else 0.0
 
 def TN(cm): return cm[0][0]
@@ -32,24 +31,19 @@ def TP(cm): return cm[1][1]
 
 # ----- TODO: implement these; tests will import and call them -----
 def precision(cm: List[List[int]]) -> float:
-    """TP / (TP + FP) with safe divide; cm is [[TN,FP],[FN,TP]]."""
-    raise NotImplementedError
+    return safe_div(TP(cm), TP(cm) + FP(cm))
 
 def recall(cm: List[List[int]]) -> float:
-    """TP / (TP + FN) with safe divide; cm is [[TN,FP],[FN,TP]]."""
-    raise NotImplementedError
+    return safe_div(TP(cm), TP(cm) + FN(cm))
 
 def f1_score(cm: List[List[int]]) -> float:
-    """2PR / (P + R) with safe divide; compute P and R from cm."""
-    raise NotImplementedError
+    return 2 * precision(cm) * recall(cm) / (precision(cm) + recall(cm))
 
 def specificity(cm: List[List[int]]) -> float:
-    """TN / (TN + FP) with safe divide; cm is [[TN,FP],[FN,TP]]."""
-    raise NotImplementedError
+    return safe_div(TN(cm), TN(cm) + FP(cm))
 
 def accuracy(cm: List[List[int]]) -> float:
-    """(TP + TN) / Total with safe divide; cm is [[TN,FP],[FN,TP]]."""
-    raise NotImplementedError
+    return safe_div(TP(cm) + TN(cm), TP(cm) + TN(cm) + FP(cm) + FN(cm))
 # ---------------------------------------------------------------
 
 def read_confusion(path: str) -> List[List[int]]:
