@@ -128,7 +128,6 @@ def auc_from_curve(curve: List[Dict[str, float]]) -> float:
 
 def auc_from_ranks(pairs: List[Pair]) -> float:
     pairs_sorted = sorted(pairs)
-    scores = [s for s, _ in pairs_sorted]
     labels = [y for _, y in pairs_sorted]
     ranks = []
     i = 0
